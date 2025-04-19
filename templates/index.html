@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern File Converter | Transform Files in Seconds</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-exchange-alt"></i>
+                <span>ConvertX</span>
+            </div>
+            <h1>Transform Files Effortlessly</h1>
+            <p class="subtitle">Convert between multiple formats with just one click</p>
+        </div>
+        
+        <form action="/convert" method="post" enctype="multipart/form-data" class="converter-form">
+            <div class="file-upload">
+                <label for="file" class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p class="upload-text">Drag & drop your file here or click to browse</p>
+                    <span class="file-name" id="fileName">No file selected</span>
+                </label>
+                <input type="file" name="file" id="file" required>
+            </div>
+            
+            <div class="conversion-options">
+                <div class="form-group">
+                    <label for="convert_from">
+                        <i class="fas fa-file-import"></i> Source Format
+                    </label>
+                    <div class="select-wrapper">
+                        <select name="convert_from" id="convert_from">
+                            <option value="docx">DOCX (Word Document)</option>
+                            <option value="pdf">PDF (Portable Document)</option>
+                            <option value="xlsx">XLSX (Excel Spreadsheet)</option>
+                            <option value="pptx">PPTX (PowerPoint)</option>
+                            <option value="jpg">JPG (Image)</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                
+                <div class="conversion-icon">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="form-group">
+                    <label for="convert_to">
+                        <i class="fas fa-file-export"></i> Target Format
+                    </label>
+                    <div class="select-wrapper">
+                        <select name="convert_to" id="convert_to">
+                            <option value="pdf">PDF (Portable Document)</option>
+                            <option value="txt">TXT (Plain Text)</option>
+                            <option value="csv">CSV (Comma Separated)</option>
+                            <option value="png">PNG (Image)</option>
+                            <option value="docx">DOCX (Word Document)</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="convert-btn">
+                <i class="fas fa-sync-alt"></i> Convert Now
+            </button>
+        </form>
+        
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Secure Processing</h3>
+                <p>Files are deleted automatically after conversion</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-bolt"></i>
+                <h3>Fast Conversion</h3>
+                <p>Process files in seconds with our cloud technology</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-file-alt"></i>
+                <h3>Multiple Formats</h3>
+                <p>Supports all popular document and image formats</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update file name when file is selected
+        document.getElementById('file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : 'No file selected';
+            document.getElementById('fileName').textContent = fileName;
+            
+            // Add active class to upload area when file is selected
+            const uploadArea = document.getElementById('uploadArea');
+            if (e.target.files[0]) {
+                uploadArea.classList.add('active');
+            } else {
+                uploadArea.classList.remove('active');
+            }
+        });
+
+        // Drag and drop functionality
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('file');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                const event = new Event('change');
+                fileInput.dispatchEvent(event);
+            }
+        });
+    </script>
+</body>
+</html>
